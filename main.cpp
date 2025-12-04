@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <map>
 
 void print_menu() {
     // print help
@@ -41,36 +42,22 @@ int get_user_option() {
 
 void process_user_option(int user_option) {
 
-    std::cout<< user_option << std::endl;
+    std::map<int, void (*)()> menu;
+
+    menu[1] = print_help;
+    menu[2] = print_exchange_stats;
+    menu[3] = enter_offer;
+    menu[4] = enter_bid;
+    menu[5] = print_wallet;
+    menu[6] = next_timeframe;
 
 
     if (user_option < 1 || user_option > 6) {
         std::cout << "invalid choice. choose 1-6" << std::endl;
+        return;
     }
 
-    if (user_option == 1) {
-        print_help();
-    }
-
-    if (user_option == 2) {
-        print_exchange_stats();
-    }
-
-    if (user_option == 3) {
-        enter_offer();
-    }
-
-    if (user_option == 4) {
-        enter_bid();
-    }
-
-    if (user_option == 5) {
-        print_wallet();
-    }
-
-    if (user_option == 6) {
-        next_timeframe();
-    }
+    menu.at(user_option)();
 }
 
 [[noreturn]] int main() {
