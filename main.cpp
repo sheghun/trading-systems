@@ -17,6 +17,18 @@ void print_menu() {
     std::cout << "============" << std::endl;
 }
 
+void print_help() { std::cout << "invalid choice. choose 1-6" << std::endl; }
+
+void print_exchange_stats() { std::cout << "market looks good" << std::endl; }
+
+void enter_bid() { std::cout << "make a bid - enter the amount: " << std::endl; }
+
+void enter_offer() { std::cout << "make an offer - enter the amount: " << std::endl; }
+
+void print_wallet() { std::cout << "your wallet is empty" << std::endl; }
+
+void next_timeframe() { std::cout << "going to next timeframe" << std::endl; }
+
 int get_user_option() {
     int user_option;
 
@@ -27,7 +39,9 @@ int get_user_option() {
     return user_option;
 }
 
-void process_user_option(const int user_option) {
+void process_user_option(int user_option) {
+
+    std::cout<< user_option << std::endl;
 
 
     if (user_option < 1 || user_option > 6) {
@@ -35,27 +49,27 @@ void process_user_option(const int user_option) {
     }
 
     if (user_option == 1) {
-        std::cout << "help - your aim is to make money. analyse the market. make bid and offers." << std::endl;
+        print_help();
     }
 
     if (user_option == 2) {
-        std::cout << "market looks good" << std::endl;
+        print_exchange_stats();
     }
 
     if (user_option == 3) {
-        std::cout << "make an offer - enter the amount: " << std::endl;
+        enter_offer();
     }
 
     if (user_option == 4) {
-        std::cout << "make a big - enter amount: " << std::endl;
+        enter_bid();
     }
 
     if (user_option == 5) {
-        std::cout << "your wallet is empty" << std::endl;
+        print_wallet();
     }
 
     if (user_option == 6) {
-        std::cout << "going to next timeframe" << std::endl;
+        next_timeframe();
     }
 }
 
@@ -63,7 +77,7 @@ void process_user_option(const int user_option) {
 
     while (true) {
         print_menu();
-        const int user_option{get_user_option()};
+        int user_option{get_user_option()};
         process_user_option(user_option);
     }
 }
