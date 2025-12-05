@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <vector>
 
 enum class order_book_type { bid, ask };
 
@@ -66,11 +67,29 @@ void process_user_option(int user_option) {
 
 int main() {
 
-    double price = 5319.450228;
-    double amount = 0.00020075;
-    std::string timestamp{"2020/03/17 17:01:24.884492,BTC/USDT,bid,5319.450228,0.00020075"};
-    std::string product{"BTC/USDT"};
-    order_book_type order_type = order_book_type::bid;
+    // double price = 5319.450228;
+    // double amount = 0.00020075;
+    // std::string timestamp{"2020/03/17 17:01:24.884492,BTC/USDT,bid,5319.450228,0.00020075"};
+    // std::string product{"BTC/USDT"};
+    // order_book_type order_type = order_book_type::bid;
+
+    std::vector<double> prices;
+    std::vector<double> amounts;
+    std::vector<std::string> timestamps;
+    std::vector<std::string> products;
+    std::vector<order_book_type> order_types;
+
+    prices.emplace_back(5319.450228);
+    amounts.emplace_back(0.00020075);
+    timestamps.emplace_back("2020/03/17 17:01:24.884492");
+    products.emplace_back("BTC/USDT");
+    order_types.emplace_back(order_book_type::bid);
+
+    std::cout << "price: " << prices[0] << std::endl;
+    std::cout << "amount: " << amounts[0] << std::endl;
+    std::cout << "timestamp: " << timestamps[0] << std::endl;
+    std::cout << "product: " << products[0] << std::endl;
+    std::cout << "type: " << (order_types[0] == order_book_type::bid ? "bid" : "ask") << std::endl;
 
     while (true) {
         print_menu();
