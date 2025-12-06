@@ -6,6 +6,23 @@
 
 enum class order_book_type { bid, ask };
 
+class order_book_entry {
+public:
+    order_book_entry(double price, double amount, std::string timestamp, std::string product, order_book_type type) {
+        this->price = price;
+        this->amount = amount;
+        this->timestamp = timestamp;
+        this->product = product;
+        this->type = type;
+    }
+
+    double price;
+    double amount;
+    std::string timestamp;
+    std::string product;
+    order_book_type type;
+};
+
 
 void print_menu() {
     // print help
@@ -73,29 +90,34 @@ int main() {
     // std::string product{"BTC/USDT"};
     // order_book_type order_type = order_book_type::bid;
 
-    std::vector<double> prices;
-    std::vector<double> amounts;
-    std::vector<std::string> timestamps;
-    std::vector<std::string> products;
-    std::vector<order_book_type> order_types;
+    // std::vector<double> prices;
+    // std::vector<double> amounts;
+    // std::vector<std::string> timestamps;
+    // std::vector<std::string> products;
+    // std::vector<order_book_type> order_types;
+    //
+    // prices.emplace_back(5319.450228);
+    // amounts.emplace_back(0.00020075);
+    // timestamps.emplace_back("2020/03/17 17:01:24.884492");
+    // products.emplace_back("BTC/USDT");
+    // order_types.emplace_back(order_book_type::bid);
+    //
+    // std::cout << "price: " << prices[0] << std::endl;
+    // std::cout << "amount: " << amounts[0] << std::endl;
+    // std::cout << "timestamp: " << timestamps[0] << std::endl;
+    // std::cout << "product: " << products[0] << std::endl;
+    // std::cout << "type: " << (order_types[0] == order_book_type::bid ? "bid" : "ask") << std::endl;
+    //
+    // while (true) {
+    //     print_menu();
+    //     int user_option{get_user_option()};
+    //     process_user_option(user_option);
+    // }
 
-    prices.emplace_back(5319.450228);
-    amounts.emplace_back(0.00020075);
-    timestamps.emplace_back("2020/03/17 17:01:24.884492");
-    products.emplace_back("BTC/USDT");
-    order_types.emplace_back(order_book_type::bid);
-
-    std::cout << "price: " << prices[0] << std::endl;
-    std::cout << "amount: " << amounts[0] << std::endl;
-    std::cout << "timestamp: " << timestamps[0] << std::endl;
-    std::cout << "product: " << products[0] << std::endl;
-    std::cout << "type: " << (order_types[0] == order_book_type::bid ? "bid" : "ask") << std::endl;
-
-    while (true) {
-        print_menu();
-        int user_option{get_user_option()};
-        process_user_option(user_option);
-    }
+    order_book_entry order1{
+            5319.450228, 0.00020075, "2020/03/17 17:01:24.884492", "BTC/USDT", order_book_type::bid,
+    };
+    std::cout << "the price is: " << order1.price << std::endl;
 
 
     return 0;
