@@ -1,127 +1,110 @@
-#include <algorithm>
 #include <iostream>
-#include <map>
-#include <string>
 #include <vector>
+#include <string>
+using namespace std;
 
-enum class order_book_type { bid, ask };
+enum class OrderBookType { bid, ask};
 
-class order_book_entry {
+//class declaration
+class OrderBookEntry
+{
+
 public:
-    order_book_entry(double _price, double _amount, std::string _timestamp, std::string _product,
-                     order_book_type _type) :
-        price(_price), amount(_amount), timestamp(_timestamp), product(_product), type(_type) {}
+	double price;
+	double amount;
+	std::string timestamp;
+	std::string product;
+	OrderBookType orderType;
 
-    double price;
-    double amount;
-    std::string timestamp;
-    std::string product;
-    order_book_type type;
+	//constructor
+	OrderBookEntry(double _price, double _amount, std::string _timestamp, std::string _product, OrderBookType _orderType);
+
 };
 
-
-void print_menu() {
-    // print help
-    std::cout << "1: print help" << std::endl;
-    // print exchange stats
-    std::cout << "2: print exchange stats" << std::endl;
-    // make an offer
-    std::cout << "3: make an offer" << std::endl;
-    // make a bid
-    std::cout << "4: make a bid" << std::endl;
-    // print wallet
-    std::cout << "5: print wallet" << std::endl;
-    // continue
-    std::cout << "6: continue" << std::endl;
-    std::cout << "============" << std::endl;
+//class definition
+OrderBookEntry::OrderBookEntry(double _price, double _amount, std::string _timestamp, std::string _product, OrderBookType _orderType)
+	:price(_price), amount(_amount), timestamp(_timestamp), product(_product), orderType(_orderType)
+{
 }
 
-void print_help() { std::cout << "invalid choice. choose 1-6" << std::endl; }
-
-void print_exchange_stats() { std::cout << "market looks good" << std::endl; }
-
-void enter_bid() { std::cout << "make a bid - enter the amount: " << std::endl; }
-
-void enter_offer() { std::cout << "make an offer - enter the amount: " << std::endl; }
-
-void print_wallet() { std::cout << "your wallet is empty" << std::endl; }
-
-void next_timeframe() { std::cout << "going to next timeframe" << std::endl; }
-
-int get_user_option() {
-    int user_option;
-
-    std::cout << "type in 1-6" << std::endl;
-    std::cin >> user_option;
-    std::cout << "you chose: " << user_option << std::endl;
-
-    return user_option;
-}
-
-void process_user_option(int user_option) {
-
-    std::map<int, void (*)()> menu;
-
-    menu[1] = print_help;
-    menu[2] = print_exchange_stats;
-    menu[3] = enter_offer;
-    menu[4] = enter_bid;
-    menu[5] = print_wallet;
-    menu[6] = next_timeframe;
+//some functions for summary
+double computeAveragePrice(vector<OrderBookEntry>& entires);
+double computeLowPrice(vector<OrderBookEntry>& entries);
+double computeHighPrice(vector<OrderBookEntry>& entries);
 
 
-    if (user_option < 1 || user_option > 6) {
-        std::cout << "invalid choice. choose 1-6" << std::endl;
-        return;
-    }
 
-    menu.at(user_option)();
-}
+int main()
+{
+	std::vector<OrderBookEntry> entries;
 
-int main() {
+	//adding data.
+	OrderBookEntry obe1{ 0.02186299,0.1,"2020/03/17 17:01:24.884492","ETH/BTC",OrderBookType::bid };
+	OrderBookEntry obe2{ 1.22186299,1.1,"2020/03/17 17:10:25.885492","ETH/BTC",OrderBookType::ask };
+	OrderBookEntry obe3{ 2.22186299,3.1,"2020/03/18 15:12:25.885492","ETH/BTC",OrderBookType::ask };
+	OrderBookEntry obe4{ 0.22186259,2.1,"2020/03/17 08:10:19.885492","ETH/BTC",OrderBookType::bid };
+	OrderBookEntry obe5{ 3.22186269,0.1,"2020/03/17 23:10:20.885492","ETH/BTC",OrderBookType::ask };
+	entries.push_back(obe1);
+	entries.push_back(obe2);
+	entries.push_back(obe3);
+	entries.push_back(obe4);
+	entries.push_back(obe5);
 
-    // double price = 5319.450228;
-    // double amount = 0.00020075;
-    // std::string timestamp{"2020/03/17 17:01:24.884492,BTC/USDT,bid,5319.450228,0.00020075"};
-    // std::string product{"BTC/USDT"};
-    // order_book_type order_type = order_book_type::bid;
 
-    // std::vector<double> prices;
-    // std::vector<double> amounts;
-    // std::vector<std::string> timestamps;
-    // std::vector<std::string> products;
-    // std::vector<order_book_type> order_types;
-    //
-    // prices.emplace_back(5319.450228);
-    // amounts.emplace_back(0.00020075);
-    // timestamps.emplace_back("2020/03/17 17:01:24.884492");
-    // products.emplace_back("BTC/USDT");
-    // order_types.emplace_back(order_book_type::bid);
-    //
-    // std::cout << "price: " << prices[0] << std::endl;
-    // std::cout << "amount: " << amounts[0] << std::endl;
-    // std::cout << "timestamp: " << timestamps[0] << std::endl;
-    // std::cout << "product: " << products[0] << std::endl;
-    // std::cout << "type: " << (order_types[0] == order_book_type::bid ? "bid" : "ask") << std::endl;
-    //
-    // while (true) {
-    //     print_menu();
-    //     int user_option{get_user_option()};
-    //     process_user_option(user_option);
-    // }
+	//iteration
+	cout << "prices" << endl;
+	cout << "----------" << endl;
+	for (const OrderBookEntry& e : entries)
+	{
+		cout << e.price << endl;
+	}
 
-    std::vector<order_book_entry> orders;
-
-    order_book_entry order1{
-            5319.450228, 0.00020075, "2020/03/17 17:01:24.884492", "BTC/USDT", order_book_type::bid,
-    };
-
-    orders.push_back(order1);
-
-    for (order_book_entry &order: orders) {
-        std::cout << "the price: " << order.price << std::endl;
-    }
+	//summary
+	cout << "===========summary============" << endl;
+	cout << "average price is :" << computeAveragePrice(entries) << endl;
+	cout << "lowest price is :" << computeLowPrice(entries) << endl;
+	cout << "highest price is :" << computeHighPrice(entries) << endl;
 
 
     return 0;
+}
+
+//function definitions.
+
+//computing average price.
+double computeAveragePrice(vector<OrderBookEntry>& entries)
+{
+	double total=0;
+	double average = 0;
+	for (const OrderBookEntry& e : entries)
+	{
+		total = total + e.price;
+	}
+	average = total / entries.size();
+	return average;
+}
+
+//computing lowest price.
+double computeLowPrice(vector<OrderBookEntry>& entries)
+{
+	double lowest=entries[0].price;
+	for (const OrderBookEntry& e : entries)
+	{
+		if (e.price < lowest) lowest = e.price;
+
+	}
+	return lowest;
+}
+
+//computing highest price.
+double computeHighPrice(vector<OrderBookEntry>& entries)
+{
+	double highest = entries[0].price;
+	for (const OrderBookEntry& e : entries)
+	{
+		if (e.price > highest) highest = e.price;
+
+	}
+	return highest;
+
 }
