@@ -110,10 +110,17 @@ int main() {
     //     process_user_option(user_option);
     // }
 
+    std::vector<order_book_entry> orders;
+
     order_book_entry order1{
             5319.450228, 0.00020075, "2020/03/17 17:01:24.884492", "BTC/USDT", order_book_type::bid,
     };
-    std::cout << "the price is: " << order1.price << std::endl;
+
+    orders.push_back(order1);
+
+    for (order_book_entry &order: orders) {
+        std::cout << "the price: " << order.price << std::endl;
+    }
 
 
     return 0;
