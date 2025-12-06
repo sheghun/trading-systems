@@ -9,7 +9,6 @@ int main() {
 
     merkel_main app{};
     app.init();
-    app.print_menu();
 
     return 0;
 }

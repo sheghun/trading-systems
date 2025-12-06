@@ -1,11 +1,19 @@
 #include "merkel_main.h"
 #include <iostream>
 #include <map>
+#include <vector>
 
 
 merkel_main::merkel_main() {}
 
-void merkel_main::init() {}
+void merkel_main::init() {
+    int input;
+    while (true) {
+        print_menu();
+        input = get_user_option();
+        process_user_option(input);
+    }
+}
 
 void merkel_main::print_menu() {
     // print help
@@ -63,4 +71,19 @@ void merkel_main::process_user_option(int user_option) {
     }
 
     (this->*menu.at(user_option))();
+}
+
+void merkel_main::load_order_book() {
+
+    orders.push_back(order_book_entry{
+            5319.450228,
+            0.00020075,
+            "2020/03/17 17:01:24.884492",
+            "BTC/USDT",
+            order_book_type::bid,
+    });
+}
+
+void merkel_main::print_market_stats() {
+    std::cout << "order book contains: " << orders.size() << " entries" << std::endl;
 }
