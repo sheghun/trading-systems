@@ -1,3 +1,4 @@
+#include <fstream>
 #include <iostream>
 #include <ostream>
 
@@ -41,9 +42,11 @@ int main() {
     const std::string s = "2020/03/17 17:01:24.884492,btc/usdt,ask,5405.41766912,0.69895055";
 
 
-    for (const std::vector<std::string> tokens = tokenise(s, ','); auto &t: tokens) {
-        std::cout << t << std::endl;
-    }
+    // for (const std::vector<std::string> tokens = tokenise(s, ','); auto &t: tokens) {
+    //     std::cout << t << std::endl;
+    // }
+
+    std::ifstream csv_file{};
 
     return 0;
 }
