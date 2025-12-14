@@ -46,7 +46,15 @@ int main() {
     //     std::cout << t << std::endl;
     // }
 
-    std::ifstream csv_file{};
+    std::ifstream csv_file{"20200317.csv"};
+    ;
+
+    if (csv_file.is_open()) {
+        std::cout << "file opened" << std::endl;
+        csv_file.close();
+    } else {
+        std::cout << "could not open file" << std::endl;
+    }
 
     return 0;
 }
