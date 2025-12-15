@@ -13,3 +13,5 @@ add_executable(trading_system main.cpp
         merkel_main.cpp
 )
 
+add_executable(csv_parser csv_parser.cpp)
+
