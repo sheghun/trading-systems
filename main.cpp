@@ -39,18 +39,36 @@ int main() {
 
     // merkel_main app{};
     // app.init();
-    const std::string s = "2020/03/17 17:01:24.884492,btc/usdt,ask,5405.41766912,0.69895055";
 
 
-    // for (const std::vector<std::string> tokens = tokenise(s, ','); auto &t: tokens) {
-    //     std::cout << t << std::endl;
-    // }
-
+    std::string line;
     std::ifstream csv_file{"20200317.csv"};
-    ;
 
     if (csv_file.is_open()) {
         std::cout << "file opened" << std::endl;
+        while (std::getline(csv_file, line)) {
+            std::cout << "Read line " << line << std::endl;
+            const std::vector<std::string> tokens = tokenise(line, ',');
+            if (tokens.size() != 5) {
+                std::cout << "Bad line" << std::endl;
+                continue;
+            }
+
+            try {
+                double price = std::stod(tokens[3]);
+                double amount = std::stod(tokens[4]);
+                std::cout << price << ": " << amount << std::endl;
+            } catch (std::exception &e) {
+                std::cout << "bad float! " << tokens[3] << std::endl;
+                break;
+            }
+
+
+            for (auto &t: tokens) {
+                std::cout << t << std::endl;
+            }
+        }
+
         csv_file.close();
     } else {
         std::cout << "could not open file" << std::endl;
