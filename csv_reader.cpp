@@ -1,11 +1,28 @@
-#include "csv_reader.h"
+#include <fstream>
 #include <iostream>
+
+#include "csv_reader.h"
 
 
 csv_reader::csv_reader() {}
 
 std::vector<order_book_entry> csv_reader::read_csv(std::string filename) {
     std::vector<order_book_entry> entries;
+
+    std::ifstream csv_file{filename};
+    std::string line;
+
+    if (csv_file.is_open()) {
+        while (std::getline(csv_file, line)) {
+            try {
+                entries.push_back(strings_to_obe(tokenise(line, ',')));
+            }catch (const std::exception& e) {
+                std::cout << "csv_read::read_csv bad data" << line << std::endl;
+            }
+        }
+    }
+
+    std::cout << "csv_reader::read_csv read " << entries.size() << " entries" << std::endl;
 
     return entries;
 }

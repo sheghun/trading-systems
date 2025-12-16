@@ -12,4 +12,6 @@ int main() {
     // app.init();
 
     csv_reader reader;
+
+    csv_reader::read_csv("20200317.csv");
 }
