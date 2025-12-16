@@ -6,37 +6,6 @@
 #include "csv_reader.h"
 
 
-std::vector<std::string> tokenise(std::string csv_line, char seperator) {
-    std::vector<std::string> tokens;
-
-    signed int start, end;
-
-    std::string token;
-
-    start = csv_line.find_first_not_of(seperator, 0);
-
-    do {
-
-        end = csv_line.find_first_of(seperator, start);
-
-        if (start == csv_line.length() || start == end)
-            break;
-
-        if (end >= 0) {
-            token = csv_line.substr(start, end - start);
-        } else {
-            token = csv_line.substr(start, csv_line.length() - start);
-        }
-
-        tokens.push_back(token);
-        start = end + 1;
-
-    } while (end != std::string::npos);
-
-
-    return tokens;
-}
-
 int main() {
 
     // merkel_main app{};
