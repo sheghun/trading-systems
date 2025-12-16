@@ -3,10 +3,13 @@
 #include <map>
 #include <vector>
 
+#include "csv_reader.h"
+
 
 merkel_main::merkel_main() {}
 
 void merkel_main::init() {
+    load_order_book();
     int input;
     while (true) {
         print_menu();
@@ -58,7 +61,7 @@ void merkel_main::process_user_option(int user_option) {
     std::map<int, void (merkel_main::*)()> menu;
 
     menu[1] = &merkel_main::print_help;
-    menu[2] = &merkel_main::print_exchange_stats;
+    menu[2] = &merkel_main::print_market_stats;
     menu[3] = &merkel_main::enter_offer;
     menu[4] = &merkel_main::enter_bid;
     menu[5] = &merkel_main::print_wallet;
@@ -73,17 +76,21 @@ void merkel_main::process_user_option(int user_option) {
     (this->*menu.at(user_option))();
 }
 
-void merkel_main::load_order_book() {
-
-    orders.push_back(order_book_entry{
-            5319.450228,
-            0.00020075,
-            "2020/03/17 17:01:24.884492",
-            "BTC/USDT",
-            order_book_type::bid,
-    });
-}
+void merkel_main::load_order_book() { orders = csv_reader::read_csv("20200317.csv"); }
 
 void merkel_main::print_market_stats() {
-    std::cout << "order book contains: " << orders.size() << " entries" << std::endl;
+    std::cout << "\norder book contains: " << orders.size() << " entries" << std::endl;
+    unsigned int bids = 0;
+    unsigned int asks = 0;
+
+    for (order_book_entry &e: orders) {
+        if (e.order_type == order_book_type::ask) {
+            ++asks;
+        }
+        if (e.order_type == order_book_type::bid) {
+            ++bids;
+        }
+    }
+
+    std::cout << "order book asks: " << asks << " bids: " << bids << std::endl << std::endl;
 }
