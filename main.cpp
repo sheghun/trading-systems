@@ -3,6 +3,8 @@
 #include <ostream>
 
 #include "merkel_main.h"
+#include "csv_reader.h"
+
 
 std::vector<std::string> tokenise(std::string csv_line, char seperator) {
     std::vector<std::string> tokens;
@@ -40,39 +42,5 @@ int main() {
     // merkel_main app{};
     // app.init();
 
-
-    std::string line;
-    std::ifstream csv_file{"20200317.csv"};
-
-    if (csv_file.is_open()) {
-        std::cout << "file opened" << std::endl;
-        while (std::getline(csv_file, line)) {
-            std::cout << "Read line " << line << std::endl;
-            const std::vector<std::string> tokens = tokenise(line, ',');
-            if (tokens.size() != 5) {
-                std::cout << "Bad line" << std::endl;
-                continue;
-            }
-
-            try {
-                double price = std::stod(tokens[3]);
-                double amount = std::stod(tokens[4]);
-                std::cout << price << ": " << amount << std::endl;
-            } catch (std::exception &e) {
-                std::cout << "bad float! " << tokens[3] << std::endl;
-                break;
-            }
-
-
-            for (auto &t: tokens) {
-                std::cout << t << std::endl;
-            }
-        }
-
-        csv_file.close();
-    } else {
-        std::cout << "could not open file" << std::endl;
-    }
-
-    return 0;
+    csv_reader reader;
 }
