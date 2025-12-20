@@ -12,4 +12,7 @@ public:
     std::vector<std::string> get_known_products();
     /* return vector of orders according to the sent filters*/
     std::vector<order_book_entry> get_orders(order_book_type type, std::string product, std::string timestamp);
+
+private:
+    std::vector<order_book_entry> orders;
 };

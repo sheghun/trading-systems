@@ -12,6 +12,7 @@ add_executable(trading_system main.cpp
         order_book_entry.cpp
         merkel_main.cpp
         csv_reader.cpp
+        order_book.cpp
 )
 
 add_executable(csv_parser csv_parser.cpp)
