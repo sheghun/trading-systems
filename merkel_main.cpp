@@ -9,7 +9,6 @@
 merkel_main::merkel_main() {}
 
 void merkel_main::init() {
-    load_order_book();
     int input;
     while (true) {
         print_menu();
@@ -76,21 +75,19 @@ void merkel_main::process_user_option(int user_option) {
     (this->*menu.at(user_option))();
 }
 
-void merkel_main::load_order_book() { orders = csv_reader::read_csv("20200317.csv"); }
-
 void merkel_main::print_market_stats() {
-    std::cout << "\norder book contains: " << orders.size() << " entries" << std::endl;
-    unsigned int bids = 0;
-    unsigned int asks = 0;
-
-    for (order_book_entry &e: orders) {
-        if (e.order_type == order_book_type::ask) {
-            ++asks;
-        }
-        if (e.order_type == order_book_type::bid) {
-            ++bids;
-        }
-    }
-
-    std::cout << "order book asks: " << asks << " bids: " << bids << std::endl << std::endl;
+    // std::cout << "\norder book contains: " << orders.size() << " entries" << std::endl;
+    // unsigned int bids = 0;
+    // unsigned int asks = 0;
+    //
+    // for (order_book_entry &e: orders) {
+    //     if (e.order_type == order_book_type::ask) {
+    //         ++asks;
+    //     }
+    //     if (e.order_type == order_book_type::bid) {
+    //         ++bids;
+    //     }
+    // }
+    //
+    // std::cout << "order book asks: " << asks << " bids: " << bids << std::endl << std::endl;
 }

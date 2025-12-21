@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "order_book.h"
 #include "order_book_entry.h"
 
 class merkel_main {
@@ -9,7 +10,6 @@ public:
     void init();
 
 private:
-    std::vector<order_book_entry> orders;
     void print_menu();
     void print_help();
     void print_market_stats();
@@ -19,6 +19,7 @@ private:
     void print_wallet();
     void next_timeframe();
     void process_user_option(int user_option);
-    void load_order_book();
     int get_user_option();
+
+    order_book _order_book{"20200317.csv"};
 };
