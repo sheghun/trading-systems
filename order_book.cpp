@@ -1,3 +1,4 @@
+#include <map>
 #include "order_book.h"
 #include "csv_reader.h"
 
@@ -7,6 +8,16 @@ order_book::order_book(std::string filename) {
 
 std::vector<std::string> order_book::get_known_products() {
     std::vector<std::string> products;
+    std::map<std::string, bool> product_map;
+
+    for (order_book_entry &obe : orders) {
+        product_map[obe.product] = true;
+    }
+
+    for (auto const &p : product_map) {
+        products.push_back(p.first);
+    }
+
     return products;
 }
 
