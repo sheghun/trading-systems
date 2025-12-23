@@ -23,11 +23,42 @@ std::vector<order_book_entry> order_book::get_orders(order_book_type type, std::
     std::vector<order_book_entry> orders_sub;
 
     for (order_book_entry &e: orders) {
-        if (e.order_type== type && e.product == product && e.timestamp == timestamp) {
+        if (e.order_type == type && e.product == product && e.timestamp == timestamp) {
             orders_sub.push_back(e);
         }
     }
 
 
     return orders_sub;
+}
+
+double order_book::get_highest_price(std::vector<order_book_entry> const &orders) {
+
+    if (orders.empty()) {
+        return 0.0f;
+    }
+
+    double max = orders[0].price;
+    for (order_book_entry const &e: orders) {
+        if (e.price > max) {
+            max = e.price;
+        }
+    }
+
+    return max;
+}
+
+double order_book::get_lowest_price(std::vector<order_book_entry> const &orders) {
+    if (orders.empty()) {
+        return 0.0f;
+    }
+
+    double min = orders[0].price;
+    for (order_book_entry const &e: orders) {
+        if (e.price < min) {
+            min = e.price;
+        }
+    }
+
+    return min;
 }

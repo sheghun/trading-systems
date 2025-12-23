@@ -13,6 +13,9 @@ public:
     /* return vector of orders according to the sent filters*/
     std::vector<order_book_entry> get_orders(order_book_type type, std::string product, std::string timestamp);
 
+    static double get_highest_price(std::vector<order_book_entry> const &orders);
+    static double get_lowest_price(std::vector<order_book_entry> const &orders);
+
 private:
     std::vector<order_book_entry> orders;
 };
