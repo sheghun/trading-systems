@@ -20,6 +20,7 @@ private:
     void next_timeframe();
     void process_user_option(int user_option);
     int get_user_option();
+    std::string current_time;
 
     order_book _order_book{"20200317.csv"};
 };

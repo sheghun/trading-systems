@@ -10,6 +10,7 @@ merkel_main::merkel_main() {}
 
 void merkel_main::init() {
     int input;
+    current_time = this->_order_book.get_earliest_time();
     while (true) {
         print_menu();
         input = get_user_option();
@@ -30,7 +31,10 @@ void merkel_main::print_menu() {
     std::cout << "5: print wallet" << std::endl;
     // continue
     std::cout << "6: continue" << std::endl;
+
     std::cout << "============" << std::endl;
+
+    std::cout << "current time is: " << current_time << std::endl;
 }
 
 void merkel_main::print_help() { std::cout << "invalid choice. choose 1-6" << std::endl; }

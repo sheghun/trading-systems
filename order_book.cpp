@@ -62,3 +62,5 @@ double order_book::get_lowest_price(std::vector<order_book_entry> const &orders)
 
     return min;
 }
+
+std::string order_book::get_earliest_time() { return this->orders[0].timestamp; }
