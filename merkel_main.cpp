@@ -47,7 +47,10 @@ void merkel_main::enter_offer() { std::cout << "make an offer - enter the amount
 
 void merkel_main::print_wallet() { std::cout << "your wallet is empty" << std::endl; }
 
-void merkel_main::next_timeframe() { std::cout << "going to next timeframe" << std::endl; }
+void merkel_main::next_timeframe() {
+    std::cout << "going to next timeframe" << std::endl;
+    current_time = _order_book.get_next_time(current_time);
+}
 
 int merkel_main::get_user_option() {
     int user_option;

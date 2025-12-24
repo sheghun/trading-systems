@@ -64,3 +64,21 @@ double order_book::get_lowest_price(std::vector<order_book_entry> const &orders)
 }
 
 std::string order_book::get_earliest_time() { return this->orders[0].timestamp; }
+
+std::string order_book::get_next_time(std::string timestamp) {
+    std::string next_timestamp;
+
+    for (order_book_entry const &e: orders) {
+        if (e.timestamp > timestamp) {
+            next_timestamp = e.timestamp;
+            break;
+        }
+    }
+
+    if (next_timestamp.empty()) {
+        next_timestamp = orders[0].timestamp;
+    }
+
+
+    return next_timestamp;
+}
