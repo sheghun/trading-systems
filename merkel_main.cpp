@@ -1,5 +1,6 @@
 #include "merkel_main.h"
 #include <iostream>
+#include <limits>
 #include <map>
 #include <vector>
 
@@ -43,7 +44,13 @@ void merkel_main::print_exchange_stats() { std::cout << "market looks good" << s
 
 void merkel_main::enter_bid() { std::cout << "make a bid - enter the amount: " << std::endl; }
 
-void merkel_main::enter_offer() { std::cout << "make an offer - enter the amount: " << std::endl; }
+void merkel_main::enter_ask() {
+    std::cout << "make an ask - enter the amount: product,price,amount e.g ETH/BTC,200,0.5" << std::endl;
+    std::string input;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, input);
+    std::cout << "you typed: " << input << "\n" << std::endl;
+}
 
 void merkel_main::print_wallet() { std::cout << "your wallet is empty" << std::endl; }
 
@@ -68,7 +75,7 @@ void merkel_main::process_user_option(int user_option) {
 
     menu[1] = &merkel_main::print_help;
     menu[2] = &merkel_main::print_market_stats;
-    menu[3] = &merkel_main::enter_offer;
+    menu[3] = &merkel_main::enter_ask;
     menu[4] = &merkel_main::enter_bid;
     menu[5] = &merkel_main::print_wallet;
     menu[6] = &merkel_main::next_timeframe;

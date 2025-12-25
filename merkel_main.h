@@ -15,7 +15,7 @@ private:
     void print_market_stats();
     void print_exchange_stats();
     void enter_bid();
-    void enter_offer();
+    void enter_ask();
     void print_wallet();
     void next_timeframe();
     void process_user_option(int user_option);
