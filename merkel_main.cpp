@@ -49,6 +49,18 @@ void merkel_main::enter_ask() {
     std::string input;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin, input);
+
+    std::vector<std::string> tokens = csv_reader::tokenise(input, ',');
+    if (tokens.size() != 3) {
+
+        std::cout << "merkel_main::enter_bid bad input! " << input << std::endl;
+
+    } else {
+        order_book_entry obe =
+                csv_reader::strings_to_obe(tokens[1], tokens[2], current_time, tokens[0], order_book_type::ask);
+    }
+
+
     std::cout << "you typed: " << input << "\n" << std::endl;
 }
 

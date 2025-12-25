@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <utility>
 
 #include "csv_reader.h"
 
@@ -16,7 +17,7 @@ std::vector<order_book_entry> csv_reader::read_csv(std::string filename) {
         while (std::getline(csv_file, line)) {
             try {
                 entries.push_back(strings_to_obe(tokenise(line, ',')));
-            }catch (const std::exception& e) {
+            } catch (const std::exception &e) {
                 std::cout << "csv_read::read_csv bad data" << line << std::endl;
             }
         }
@@ -60,6 +61,7 @@ std::vector<std::string> csv_reader::tokenise(std::string csv_line, char seperat
     return tokens;
 }
 
+
 order_book_entry csv_reader::strings_to_obe(std::vector<std::string> tokens) {
     double price, amount;
 
@@ -73,13 +75,33 @@ order_book_entry csv_reader::strings_to_obe(std::vector<std::string> tokens) {
         price = std::stod(tokens[3]);
         amount = std::stod(tokens[4]);
     } catch (std::exception &e) {
-        std::cout << "bad float! " << tokens[3] << std::endl;
-        std::cout << "bad float! " << tokens[4] << std::endl;
+        std::cout << "csv_reader::strings_to_obe bad float! " << tokens[3] << std::endl;
+        std::cout << "csv_reader::strings_to_obe bad float! " << tokens[4] << std::endl;
         throw;
     }
 
 
     order_book_entry obe{price, amount, tokens[0], tokens[1], order_book_entry::string_to_order_book_type(tokens[2])};
+
+    return obe;
+}
+
+
+order_book_entry csv_reader::strings_to_obe(std::string price_, std::string amount_, std::string timestamp_,
+                                            std::string product_, order_book_type type_) {
+    double price, amount;
+
+    try {
+        price = std::stod(price_);
+        amount = std::stod(amount_);
+    } catch (std::exception &e) {
+        std::cout << "csv_reader::strings_to_obe bad float! " << price_ << std::endl;
+        std::cout << "csv_reader::strings_to_obe bad float! " << amount_ << std::endl;
+        throw;
+    }
+
+
+    order_book_entry obe{price, amount, std::move(timestamp_), std::move(product_), type_};
 
     return obe;
 }
