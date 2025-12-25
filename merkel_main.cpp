@@ -85,8 +85,7 @@ void merkel_main::process_user_option(int user_option) {
 void merkel_main::print_market_stats() {
     for (auto const &p: _order_book.get_known_products()) {
         std::cout << "product: " << p << std::endl;
-        std::vector<order_book_entry> entries =
-                _order_book.get_orders(order_book_type::ask, p, "2020/03/17 17:01:24.884492");
+        std::vector<order_book_entry> entries = _order_book.get_orders(order_book_type::ask, p, current_time);
 
         std::cout << "asks seen: " << entries.size() << std::endl;
         std::cout << "max ask: " << order_book::get_highest_price(entries) << std::endl;
