@@ -47,7 +47,6 @@ void merkel_main::enter_bid() { std::cout << "make a bid - enter the amount: " <
 void merkel_main::enter_ask() {
     std::cout << "make an ask - enter the amount: product,price,amount e.g ETH/BTC,200,0.5" << std::endl;
     std::string input;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin, input);
 
     std::vector<std::string> tokens = csv_reader::tokenise(input, ',');
@@ -56,8 +55,13 @@ void merkel_main::enter_ask() {
         std::cout << "merkel_main::enter_bid bad input! " << input << std::endl;
 
     } else {
-        order_book_entry obe =
-                csv_reader::strings_to_obe(tokens[1], tokens[2], current_time, tokens[0], order_book_type::ask);
+        try {
+
+            order_book_entry obe =
+                    csv_reader::strings_to_obe(tokens[1], tokens[2], current_time, tokens[0], order_book_type::ask);
+        } catch (const std::exception &e) {
+            std::cout << "merkel_main::enter_ask bad input! " << input << std::endl;
+        }
     }
 
 
@@ -72,13 +76,21 @@ void merkel_main::next_timeframe() {
 }
 
 int merkel_main::get_user_option() {
-    int user_option;
+    std::string line;
+    try {
 
-    std::cout << "type in 1-6" << std::endl;
-    std::cin >> user_option;
-    std::cout << "you chose: " << user_option << std::endl;
+        std::cout << "type in 1-6" << std::endl;
 
-    return user_option;
+        std::getline(std::cin, line);
+        int user_option = std::stoi(line);
+
+        std::cout << "you chose: " << user_option << std::endl;
+
+        return user_option;
+    } catch (const std::exception &e) {
+        std::cout << "merkel_main::get_user_option bad input! " << line << std::endl;
+    }
+    return 0;
 }
 
 void merkel_main::process_user_option(int user_option) {
