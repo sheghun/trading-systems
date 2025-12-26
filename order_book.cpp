@@ -1,6 +1,8 @@
-#include "order_book.h"
+#include <algorithm>
 #include <map>
+
 #include "csv_reader.h"
+#include "order_book.h"
 
 order_book::order_book(std::string filename) { this->orders = csv_reader::read_csv(filename); }
 
@@ -81,4 +83,9 @@ std::string order_book::get_next_time(std::string timestamp) {
 
 
     return next_timestamp;
+}
+
+void order_book::insert_order(order_book_entry &order) {
+    orders.push_back(order);
+    std::sort(orders.begin(), orders.end(), order_book_entry::compare_by_timestamp);
 }

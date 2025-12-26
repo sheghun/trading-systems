@@ -59,6 +59,7 @@ void merkel_main::enter_ask() {
 
             order_book_entry obe =
                     csv_reader::strings_to_obe(tokens[1], tokens[2], current_time, tokens[0], order_book_type::ask);
+            _order_book.insert_order(obe);
         } catch (const std::exception &e) {
             std::cout << "merkel_main::enter_ask bad input! " << input << std::endl;
         }

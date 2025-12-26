@@ -21,6 +21,8 @@ public:
      */
     std::string get_next_time(std::string timestamp);
 
+    void insert_order(order_book_entry &order);
+
     static double get_highest_price(std::vector<order_book_entry> const &orders);
     static double get_lowest_price(std::vector<order_book_entry> const &orders);
 
