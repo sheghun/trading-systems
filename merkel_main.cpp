@@ -42,7 +42,30 @@ void merkel_main::print_help() { std::cout << "invalid choice. choose 1-6" << st
 
 void merkel_main::print_exchange_stats() { std::cout << "market looks good" << std::endl; }
 
-void merkel_main::enter_bid() { std::cout << "make a bid - enter the amount: " << std::endl; }
+void merkel_main::enter_bid() {
+    std::cout << "make a bid - enter the amount: product,price,amount e.g ETH/BTC,200,0.5" << std::endl;
+
+    std::string input;
+    std::getline(std::cin, input);
+
+    std::vector<std::string> tokens = csv_reader::tokenise(input, ',');
+    if (tokens.size() != 3) {
+
+        std::cout << "merkel_main::enter_bid bad input! " << input << std::endl;
+
+    } else {
+        try {
+
+            order_book_entry obe =
+                    csv_reader::strings_to_obe(tokens[1], tokens[2], current_time, tokens[0], order_book_type::bid);
+            _order_book.insert_order(obe);
+        } catch (const std::exception &e) {
+            std::cout << "merkel_main::enter_ask bad input! " << input << std::endl;
+        }
+    }
+
+    std::cout << "you typed: " << input << "\n" << std::endl;
+}
 
 void merkel_main::enter_ask() {
     std::cout << "make an ask - enter the amount: product,price,amount e.g ETH/BTC,200,0.5" << std::endl;
@@ -64,7 +87,6 @@ void merkel_main::enter_ask() {
             std::cout << "merkel_main::enter_ask bad input! " << input << std::endl;
         }
     }
-
 
     std::cout << "you typed: " << input << "\n" << std::endl;
 }
@@ -117,11 +139,15 @@ void merkel_main::process_user_option(int user_option) {
 void merkel_main::print_market_stats() {
     for (auto const &p: _order_book.get_known_products()) {
         std::cout << "product: " << p << std::endl;
-        std::vector<order_book_entry> entries = _order_book.get_orders(order_book_type::ask, p, current_time);
+        std::vector<order_book_entry> ask_entries = _order_book.get_orders(order_book_type::ask, p, current_time);
+        std::vector<order_book_entry> bid_entries = this->_order_book.get_orders(order_book_type::bid, p, current_time);
 
-        std::cout << "asks seen: " << entries.size() << std::endl;
-        std::cout << "max ask: " << order_book::get_highest_price(entries) << std::endl;
-        std::cout << "min ask: " << order_book::get_lowest_price(entries) << std::endl;
+        std::cout << "asks seen: " << ask_entries.size() << std::endl;
+        std::cout << "bids seen: " << bid_entries.size() << std::endl;
+        std::cout << "max ask: " << order_book::get_highest_price(ask_entries) << std::endl;
+        std::cout << "max bid: " << order_book::get_highest_price(bid_entries) << std::endl;
+        std::cout << "min ask: " << order_book::get_lowest_price(ask_entries) << std::endl;
+        std::cout << "min bid: " << order_book::get_lowest_price(bid_entries) << std::endl;
     }
 
     // std::cout << "\norder book contains: " << orders.size() << " entries" << std::endl;
