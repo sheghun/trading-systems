@@ -23,6 +23,8 @@ public:
 
     void insert_order(order_book_entry &order);
 
+   std::vector<order_book_entry> match_asks_to_bids(const std::string& product, const std::string& timestamp);
+
     static double get_highest_price(std::vector<order_book_entry> const &orders);
     static double get_lowest_price(std::vector<order_book_entry> const &orders);
 
