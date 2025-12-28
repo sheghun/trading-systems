@@ -95,6 +95,11 @@ void merkel_main::print_wallet() { std::cout << "your wallet is empty" << std::e
 
 void merkel_main::next_timeframe() {
     std::cout << "going to next timeframe" << std::endl;
+    std::vector<order_book_entry> sales = _order_book.match_asks_to_bids("ETH/BTC", current_time);
+    std::cout << "sales: " << sales.size() << std::endl;
+    for (const order_book_entry &sale: sales) {
+        std::cout << "sale price: " << sale.price << " amount: " << sale.amount << std::endl;
+    }
     current_time = _order_book.get_next_time(current_time);
 }
 
