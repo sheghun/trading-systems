@@ -29,9 +29,9 @@ void merkel_main::print_menu() {
     // print exchange stats
     std::cout << "2: print exchange stats" << std::endl;
     // make an offer
-    std::cout << "3: make an offer" << std::endl;
+    std::cout << "3: enter ask" << std::endl;
     // make a bid
-    std::cout << "4: make a bid" << std::endl;
+    std::cout << "4: enter bid" << std::endl;
     // print wallet
     std::cout << "5: print wallet" << std::endl;
     // continue
@@ -47,8 +47,7 @@ void merkel_main::print_help() { std::cout << "invalid choice. choose 1-6" << st
 void merkel_main::print_exchange_stats() { std::cout << "market looks good" << std::endl; }
 
 void merkel_main::enter_bid() {
-    std::cout << "make a bid - enter the amount: product,price,amount e.g ETH/BTC,200,0.5" << std::endl;
-
+    std::cout << "enter bid - enter the amount: product,price,amount e.g ETH/BTC,200,0.5" << std::endl;
     std::string input;
     std::getline(std::cin, input);
 
@@ -62,9 +61,14 @@ void merkel_main::enter_bid() {
 
             order_book_entry obe =
                     csv_reader::strings_to_obe(tokens[1], tokens[2], current_time, tokens[0], order_book_type::bid);
-            _order_book.insert_order(obe);
+            if (this->_wallet.can_fulfill_order(obe)) {
+                std::cout << "wallet looks good. " << std::endl;
+                this->_order_book.insert_order(obe);
+            } else {
+                std::cout << "wallet has insufficient funds " << std::endl;
+            }
         } catch (const std::exception &e) {
-            std::cout << "merkel_main::enter_ask bad input! " << input << std::endl;
+            std::cout << "merkel_main::enter_bid bad input! " << input << std::endl;
         }
     }
 
@@ -72,14 +76,14 @@ void merkel_main::enter_bid() {
 }
 
 void merkel_main::enter_ask() {
-    std::cout << "make an ask - enter the amount: product,price,amount e.g ETH/BTC,200,0.5" << std::endl;
+    std::cout << "enter ask - enter the amount: product,price,amount e.g ETH/BTC,200,0.5" << std::endl;
     std::string input;
     std::getline(std::cin, input);
 
     std::vector<std::string> tokens = csv_reader::tokenise(input, ',');
     if (tokens.size() != 3) {
 
-        std::cout << "merkel_main::enter_bid bad input! " << input << std::endl;
+        std::cout << "merkel_main::enter_ask bad input! " << input << std::endl;
 
     } else {
         try {
