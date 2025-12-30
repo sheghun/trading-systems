@@ -86,7 +86,12 @@ void merkel_main::enter_ask() {
 
             order_book_entry obe =
                     csv_reader::strings_to_obe(tokens[1], tokens[2], current_time, tokens[0], order_book_type::ask);
-            _order_book.insert_order(obe);
+            if (this->_wallet.can_fulfill_order(obe)) {
+                std::cout << "wallet looks good. " << std::endl;
+                this->_order_book.insert_order(obe);
+            } else {
+                std::cout << "wallet has insufficient funds " << std::endl;
+            }
         } catch (const std::exception &e) {
             std::cout << "merkel_main::enter_ask bad input! " << input << std::endl;
         }

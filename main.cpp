@@ -5,16 +5,7 @@
 
 int main() {
 
-    // merkel_main app{};
-    // app.init();
+    merkel_main app{};
+    app.init();
 
-    wallet wallet{};
-    wallet.insert_currency("BTC", 10);
-    wallet.insert_currency("USDT", 10000);
-
-    std::cout << "wallet has BTC " << wallet.contains_currency("BTC", 5) << std::endl;
-    std::cout << wallet.to_string() << std::endl;
-
-    wallet.remove_currency("USDT", 1000);
-    std::cout << wallet.to_string() << std::endl;
 }
