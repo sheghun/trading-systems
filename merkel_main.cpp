@@ -12,6 +12,10 @@ merkel_main::merkel_main() {}
 void merkel_main::init() {
     int input;
     current_time = this->_order_book.get_earliest_time();
+
+
+    _wallet.insert_currency("BTC", 10);
+
     while (true) {
         print_menu();
         input = get_user_option();
@@ -91,7 +95,7 @@ void merkel_main::enter_ask() {
     std::cout << "you typed: " << input << "\n" << std::endl;
 }
 
-void merkel_main::print_wallet() { std::cout << "your wallet is empty" << std::endl; }
+void merkel_main::print_wallet() { std::cout << _wallet.to_string() << std::endl; }
 
 void merkel_main::next_timeframe() {
     std::cout << "going to next timeframe" << std::endl;

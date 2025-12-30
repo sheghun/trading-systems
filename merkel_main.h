@@ -1,7 +1,7 @@
 #pragma once
-#include <vector>
 #include "order_book.h"
 #include "order_book_entry.h"
+#include "wallet.h"
 
 class merkel_main {
 
@@ -20,7 +20,10 @@ private:
     void next_timeframe();
     void process_user_option(int user_option);
     int get_user_option();
+
     std::string current_time;
 
     order_book _order_book{"20200317.csv"};
+
+    wallet _wallet;
 };
