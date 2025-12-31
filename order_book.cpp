@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <iostream>
 #include <map>
 
 #include "csv_reader.h"
@@ -124,7 +123,7 @@ std::vector<order_book_entry> order_book::match_asks_to_bids(const std::string &
                     bid.amount -= ask.amount;
                     break;
                 }
-                if (bid.amount < ask.amount) {
+                if (bid.amount < ask.amount && bid.amount > 0) {
                     sale.amount = bid.amount;
                     sales.push_back(sale);
                     ask.amount -= bid.amount;

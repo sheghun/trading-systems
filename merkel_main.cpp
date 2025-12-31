@@ -1,6 +1,5 @@
 #include "merkel_main.h"
 #include <iostream>
-#include <limits>
 #include <map>
 #include <vector>
 
@@ -112,6 +111,9 @@ void merkel_main::next_timeframe() {
     std::cout << "sales: " << sales.size() << std::endl;
     for (const order_book_entry &sale: sales) {
         std::cout << "sale price: " << sale.price << " amount: " << sale.amount << std::endl;
+        if (sale.username == "simuser") {
+            this->_wallet.process_sale(sale);
+        }
     }
     current_time = _order_book.get_next_time(current_time);
 }
