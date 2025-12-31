@@ -1,5 +1,5 @@
 #include "wallet.h"
-#include <iostream>
+#include <stdexcept>
 
 #include "csv_reader.h"
 
@@ -7,6 +7,9 @@ wallet::wallet() {}
 
 void wallet::insert_currency(std::string type, double amount) {
     double balance;
+    if (amount < 0) {
+        throw std::invalid_argument("Amount cannot be negative");
+    }
     if (!this->currencies.contains(type)) {
         balance = 0;
     } else {
@@ -19,7 +22,8 @@ void wallet::insert_currency(std::string type, double amount) {
 bool wallet::remove_currency(std::string type, double amount) {
     double balance;
     if (amount < 0) {
-        throw new std::exception{};
+        throw std::invalid_argument("Amount cannot be negative");
+        return false;
     }
 
     if (currencies.count(type) == 0) {
